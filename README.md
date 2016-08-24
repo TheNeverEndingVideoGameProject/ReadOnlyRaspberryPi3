@@ -46,7 +46,7 @@ tmpfs   /run            tmpfs   nosuid,nodev    0       0
 ##6. Add noswap and ro options to /boot/cmdline.txt
 > sudo nano /boot/cmdline.txt
 
-* at the end of line after rootwait fastboot add
+  at the end of line after rootwait fastboot add
 
 > noswap ro
   
