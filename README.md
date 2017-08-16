@@ -30,19 +30,24 @@ Quick Guide on how to make your raspberry pi 3 read-only to save your sd card fr
 > sudo nano /etc/fstab
 * add ro to the options column - by changing the 2nd and 3rd line from
 > /dev/mmcblk0p1  /boot           vfat    defaults         0       2
-/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1
+
+>/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1
 
   to
 
 > /dev/mmcblk0p1  /boot           vfat    defaults,ro          0       2
-/dev/mmcblk0p2  /               ext4    defaults,noatime,ro  0       1
+
+>/dev/mmcblk0p2  /               ext4    defaults,noatime,ro  0       1
 
   then add these lines to the end of the file
   
 > tmpfs   /tmp            tmpfs   nosuid,nodev    0       0
-tmpfs   /var/log        tmpfs   nosuid,nodev    0       0
-tmpfs   /var/tmp        tmpfs   nosuid,nodev    0       0
-tmpfs   /run            tmpfs   nosuid,nodev    0       0
+
+> tmpfs   /var/log        tmpfs   nosuid,nodev    0       0
+
+> tmpfs   /var/tmp        tmpfs   nosuid,nodev    0       0
+
+> tmpfs   /run            tmpfs   nosuid,nodev    0       0
 
 ##6. Add noswap and ro options to /boot/cmdline.txt
 > sudo nano /boot/cmdline.txt
