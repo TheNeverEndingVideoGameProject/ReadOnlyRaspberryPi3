@@ -1,13 +1,13 @@
 # ReadOnlyRaspberryPi3
 Quick Guide on how to make your raspberry pi 3 read-only to save your sd card from corruption.  Intended for Raspberry Pi 3, also works for Pi 2 and zero.  Currently this guide assumes you are disabling the gui display and desktop environment and use command line only.
 
-## Requirements
+# Requirements
 1. Raspberry Pi 3, 2 or Zero
 2. Raspbian Jessie installed
 3. keyboard and monitor or active ssh session
 4. logged in with access to sudo
 
-##1. Set raspi-config Automatic Login Option
+#1. Set raspi-config Automatic Login Option
 > sudo raspi-config
 
 * select *Boot Options* 
@@ -15,17 +15,18 @@ Quick Guide on how to make your raspberry pi 3 read-only to save your sd card fr
 * select *Ok* then *Finish*
 * then select *No* when asked *Would you like to reboot now?*
 
-##2. Replace rsyslog with busybox-syslogd
+#2. Replace rsyslog with busybox-syslogd
 > sudo apt-get install busybox-syslogd
 
-##3. Remove anacron, dphys-swapfile, xserver-common, lightdm
+#3. Remove anacron, dphys-swapfile, xserver-common, lightdm
 > sudo apt-get remove --purge anacron logrotate dphys-swapfile xserver-common lightdm
 
-##4. Disable builtin bootlogs and console-setup service
+#4. Disable builtin bootlogs and console-setup service
 > sudo insserv -r bootlogs
+
 > sudo insserv -r console-setup
 
-##5. Edit /etc/fstab to set read-only mode for sd card partitions and add necessary tmpfs entries
+#5. Edit /etc/fstab to set read-only mode for sd card partitions and add necessary tmpfs entries
 > sudo nano /etc/fstab
 * add ro to the options column - by changing the 2nd and 3rd line from
 > /dev/mmcblk0p1  /boot           vfat    defaults         0       2
@@ -54,7 +55,7 @@ tmpfs   /run            tmpfs   nosuid,nodev    0       0
   
 > dwc_otg.lpm_enable=0 console=tty1 console=serial0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait fastboot noswap ro
 
-##7. Reboot and check the if you are now read-only
+#7. Reboot and check the if you are now read-only
 > sudo reboot
   
   wait for your Pi to reboot and login again, then try writing a new file
@@ -64,7 +65,7 @@ tmpfs   /run            tmpfs   nosuid,nodev    0       0
   if you are sucessful you should see
 > touch: cannot touch ‘file’: Read-only file system
 
-##8. If you need to make changes to your files you can remount to read-write mode
+#8. If you need to make changes to your files you can remount to read-write mode
 > sudo mount -o remount,rw /
 
   or if you need to change anything in /boot directory
